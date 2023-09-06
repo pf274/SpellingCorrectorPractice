@@ -16,8 +16,8 @@ public class Main {
 		
 //		String dictionaryFileName = args[0];
 //		String inputWord = args[1];
-		String dictionaryFileName = "spell/words.txt";
-		String inputWord = "yep";
+		String dictionaryFileName = "blahblah.txt";
+		String inputWord = "keenobi";
 
 		
 		//

@@ -34,7 +34,7 @@ public class Node implements INode {
     public Node addChild(char c) {
         if (c >= 'a' && c <= 'z') {
             Node newNode = new Node();
-            nodes[c] = newNode;
+            nodes[c - 'a'] = newNode;
             return newNode;
         } else {
             throw new InvalidKeyException("Character " + c + "is invalid.");
@@ -50,17 +50,32 @@ public class Node implements INode {
         return false;
     }
 
+    public boolean compareChildren(Node o) {
+        Node[] otherNodes = o.getChildren();
+        boolean stillEqual = true;
+        for (int i = 0; i < nodes.length; i++) {
+            Node node = nodes[i];
+            Node otherNode = otherNodes[i];
+            boolean bothExist = (node != null && otherNode != null);
+            boolean sameExistence = bothExist || (node == null && otherNode == null);
+            stillEqual = stillEqual && sameExistence;
+            if (bothExist) {
+                stillEqual = node.compareChildren(otherNode);
+            }
+        }
+        return stillEqual;
+    }
+
     public String[] getSubStrings(String parentString) {
         ArrayList<String> subStrings = new ArrayList<>();
-        if (hasChildren()) {
+        if (getValue() > 0) {
             subStrings.add(parentString);
-        } else {
-            for (int i = 0; i < nodes.length; i++) {
-                if (nodes[i] != null) {
-                    String newParentString = parentString + Character.toString(i + 'a');
-                    String[] newSubStrings = nodes[i].getSubStrings(newParentString);
-                    Collections.addAll(subStrings, newSubStrings);
-                }
+        }
+        for (int i = 0; i < nodes.length; i++) {
+            if (nodes[i] != null) {
+                String newParentString = parentString + Character.toString(i + 'a');
+                String[] newSubStrings = nodes[i].getSubStrings(newParentString);
+                Collections.addAll(subStrings, newSubStrings);
             }
         }
         return subStrings.toArray(new String[subStrings.size()]);
