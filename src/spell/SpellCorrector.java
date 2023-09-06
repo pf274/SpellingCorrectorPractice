@@ -1,3 +1,5 @@
+package spell;
+
 import java.io.IOException;
 
 public class SpellCorrector implements ISpellCorrector{

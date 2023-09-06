@@ -1,3 +1,5 @@
+package spell;
+
 import java.io.IOException;
 
 /**
@@ -12,13 +14,16 @@ public class Main {
 	 */
 	public static void main(String[] args) throws IOException {
 		
-		String dictionaryFileName = args[0];
-		String inputWord = args[1];
+//		String dictionaryFileName = args[0];
+//		String inputWord = args[1];
+		String dictionaryFileName = "spell/words.txt";
+		String inputWord = "yep";
+
 		
 		//
         //Create an instance of your corrector here
         //
-		ISpellCorrector corrector = null;
+		ISpellCorrector corrector = new SpellCorrector();
 		
 		corrector.useDictionary(dictionaryFileName);
 		String suggestion = corrector.suggestSimilarWord(inputWord);

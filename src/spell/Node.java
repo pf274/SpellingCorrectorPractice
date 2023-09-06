@@ -1,3 +1,5 @@
+package spell;
+
 public class Node implements INode {
     @Override
     public int getValue() {

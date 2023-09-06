@@ -1,9 +1,11 @@
+package spell;
+
 /**
  * DO NOT MODIFY THIS FILE!
  * If you think you need to modify this document for your code to work, your
  * code will not pass the TA driver.
- * Your trie class MUST implement the ITrie interface.
- * Your trie class MUST be named "Trie" found in the file "Trie.java".
+ * Your trie class MUST implement the spell.ITrie interface.
+ * Your trie class MUST be named "spell.Trie" found in the file "spell.Trie.java".
  * Your trie class MUST be in the spell package.
  */
 public interface ITrie {
@@ -63,7 +65,7 @@ public interface ITrie {
 	 * MUST be recursive.
 	 * 
 	 * @param o Object to be compared against this trie
-	 * @return true if o is a Trie with same structure and node count for each node
+	 * @return true if o is a spell.Trie with same structure and node count for each node
 	 *         false otherwise
 	 */
 	@Override

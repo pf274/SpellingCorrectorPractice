@@ -1,3 +1,5 @@
+package spell;
+
 public class Trie implements ITrie {
 
     @Override

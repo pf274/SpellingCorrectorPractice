@@ -1,8 +1,10 @@
+package passoff;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ISpellCorrector;
-import SpellCorrector;
+import spell.ISpellCorrector;
+import spell.SpellCorrector;
 
 import java.io.IOException;
 
@@ -10,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SpellTest {
 
-    private static final String WORD_FILENAME = "word.txt";
-    private static final String WORDS_FILENAME = "words.txt";
-    private static final String BIG_FILENAME = "notsobig.txt";
+    private static final String WORD_FILENAME = "spell/word.txt";
+    private static final String WORDS_FILENAME = "spell/words.txt";
+    private static final String BIG_FILENAME = "spell/notsobig.txt";
     private static final String WORD = "yea";
     private ISpellCorrector studentCorrector;
 
@@ -22,7 +24,7 @@ public class SpellTest {
             studentCorrector = new SpellCorrector();
         }
         catch(Throwable t){
-            fail(t.getClass() + ". Make sure class name is spell.SpellCorrector.");
+            fail(t.getClass() + ". Make sure class name is spell.spell.SpellCorrector.");
         }
     }
 
