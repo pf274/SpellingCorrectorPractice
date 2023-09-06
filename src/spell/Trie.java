@@ -2,14 +2,25 @@ package spell;
 
 public class Trie implements ITrie {
 
+    private final Node root = new Node();
+
     @Override
     public void add(String word) {
 
     }
 
     @Override
-    public INode find(String word) {
-        return null;
+    public Node find(String word) {
+        Node currentNode = root;
+        for (int i = 0; i < word.length(); i++) {
+            char c = Character.toLowerCase(word.charAt(i));
+            if (currentNode.getChild(c) != null) {
+                currentNode = currentNode.getChild(c);
+            } else {
+                currentNode = currentNode.addChild(c);
+            }
+        }
+        return currentNode;
     }
 
     @Override

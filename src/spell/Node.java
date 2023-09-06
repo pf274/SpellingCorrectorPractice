@@ -1,18 +1,68 @@
 package spell;
 
+import javax.management.openmbean.InvalidKeyException;
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class Node implements INode {
+    private int count = 0;
+    private final Node[] nodes = new Node[26];
+
     @Override
     public int getValue() {
-        return 0;
+        return count;
     }
 
     @Override
     public void incrementValue() {
-
+        count++;
     }
 
     @Override
-    public INode[] getChildren() {
-        return new INode[0];
+    public Node[] getChildren() {
+        return nodes;
+    }
+
+    public Node getChild(char c) {
+        if (c >= 'a' && c <= 'z') {
+            return nodes[c - 'a'];
+        } else {
+            throw new InvalidKeyException("Character " + c + "is invalid.");
+        }
+    }
+
+    public Node addChild(char c) {
+        if (c >= 'a' && c <= 'z') {
+            Node newNode = new Node();
+            nodes[c] = newNode;
+            return newNode;
+        } else {
+            throw new InvalidKeyException("Character " + c + "is invalid.");
+        }
+    }
+
+    public boolean hasChildren() {
+        for (Node node : nodes) {
+            if (node != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String[] getSubStrings(String parentString) {
+        ArrayList<String> subStrings = new ArrayList<>();
+        if (hasChildren()) {
+            subStrings.add(parentString);
+        } else {
+            for (int i = 0; i < nodes.length; i++) {
+                if (nodes[i] != null) {
+                    String newParentString = parentString + Character.toString(i + 'a');
+                    String[] newSubStrings = nodes[i].getSubStrings(newParentString);
+                    Collections.addAll(subStrings, newSubStrings);
+                }
+            }
+        }
+        return subStrings.toArray(new String[subStrings.size()]);
     }
 }
