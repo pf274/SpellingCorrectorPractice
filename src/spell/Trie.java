@@ -97,4 +97,31 @@ public class Trie implements ITrie {
             return false;
         }
     }
+
+    public String findBestWord(String inputWord) {
+        ArrayList<String> bestWords = new ArrayList<String>();
+        int bestDistance = 100;
+        String[] uniqueWords = root.getSubStrings("");
+        for (String word : uniqueWords) {
+            DLMatrix newMatrix = new DLMatrix(inputWord, word);
+            int distance = newMatrix.getDistance();
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                bestWords.clear();
+                bestWords.add(word);
+            } else if (distance == bestDistance) {
+                bestWords.add(word);
+            }
+        }
+        if (bestDistance > 2) {
+            return null;
+        }
+        if (bestWords.size() > 1) {
+            // alphabetize and return the first
+            bestWords.sort();
+            return bestWords.get(0);
+        } else {
+            return bestWords.get(0);
+        }
+    }
 }

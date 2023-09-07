@@ -27,11 +27,11 @@ public class SpellCorrector implements ISpellCorrector{
 
     @Override
     public String suggestSimilarWord(String inputWord) {
-        String deletionSuggestion = checkDeletions(inputWord);
-        if (deletionSuggestion != null) {
-            System.out.println("You might have meant " + deletionSuggestion);
+        if (myTrie.find(inputWord) != null) {
+            return inputWord.toLowerCase();
         }
-        return null;
+        String bestWord = myTrie.findBestWord(inputWord);
+        return bestWord;
     }
 // If there is more than one word in the dictionary that is an edit distance of 1 from the input string
 // then return the one that appears the greatest number of times in the original text file.
@@ -65,6 +65,5 @@ public class SpellCorrector implements ISpellCorrector{
     private String checkInsertions(String inputWord) {
         return null;
     }
-
 
 }

@@ -23,9 +23,10 @@ public class Main {
 		//
         //Create an instance of your corrector here
         //
-		ISpellCorrector corrector = new SpellCorrector();
-		
-		corrector.useDictionary(dictionaryFileName);
+		SpellCorrector corrector = new SpellCorrector();
+		DLMatrix test = new DLMatrix("suggestion", "smmestion");
+		test.printMatrix();
+		System.out.println("Difference: "  + test.getDistance());
 		String suggestion = corrector.suggestSimilarWord(inputWord);
 		if (suggestion == null) {
 		    suggestion = "No similar word found";
