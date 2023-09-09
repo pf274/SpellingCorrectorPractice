@@ -1,6 +1,7 @@
 package spell;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Trie implements ITrie {
 
@@ -45,7 +46,7 @@ public class Trie implements ITrie {
 
     @Override
     public int getWordCount() {
-        String[] uniqueWords = root.getSubStrings("");
+        String[] uniqueWords = getWordList();
         return uniqueWords.length;
     }
 
@@ -68,12 +69,7 @@ public class Trie implements ITrie {
 
     @Override
     public String toString() {
-        String[] uniqueWords = root.getSubStrings("");
-        StringBuilder finalString = new StringBuilder();
-        for (String word : uniqueWords) {
-            finalString.append(word).append("\n");
-        }
-        return finalString.toString();
+        return root.getSubStrings("");
     }
 
     @Override
@@ -99,10 +95,14 @@ public class Trie implements ITrie {
     }
 
     public String findBestWord(String inputWord) {
+        int distanceThreshold = 2;
         ArrayList<String> bestWords = new ArrayList<String>();
-        int bestDistance = 100;
-        String[] uniqueWords = root.getSubStrings("");
+        int bestDistance = distanceThreshold + 1;
+        String[] uniqueWords = getWordList();
         for (String word : uniqueWords) {
+            if (Math.abs(word.length() - inputWord.length()) > distanceThreshold) {
+                continue;
+            }
             DLMatrix newMatrix = new DLMatrix(inputWord, word);
             int distance = newMatrix.getDistance();
             if (distance < bestDistance) {
@@ -113,15 +113,25 @@ public class Trie implements ITrie {
                 bestWords.add(word);
             }
         }
-        if (bestDistance > 2) {
+        if (bestDistance > distanceThreshold) {
             return null;
         }
         if (bestWords.size() > 1) {
             // alphabetize and return the first
-            bestWords.sort();
+            Collections.sort(bestWords);
             return bestWords.get(0);
         } else {
             return bestWords.get(0);
         }
+    }
+    public String[] getWordList() {
+        String allWords = root.getSubStrings("");
+        ArrayList<String> validWords = new ArrayList<>();
+        for (String word : allWords.split("\n")) {
+            if (!word.isEmpty()) {
+                validWords.add(word);
+            }
+        }
+        return validWords.toArray(new String[validWords.size()]);
     }
 }

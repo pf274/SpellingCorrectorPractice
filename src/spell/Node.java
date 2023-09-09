@@ -57,8 +57,15 @@ public class Node implements INode {
             Node node = nodes[i];
             Node otherNode = otherNodes[i];
             boolean bothExist = (node != null && otherNode != null);
-            boolean sameExistence = bothExist || (node == null && otherNode == null);
+            boolean equalCounts = false;
+            if (bothExist) {
+                equalCounts = (node.getValue() == otherNode.getValue());
+            }
+            boolean sameExistence = (bothExist && equalCounts) || (node == null && otherNode == null);
             stillEqual = stillEqual && sameExistence;
+            if (!stillEqual) {
+                return false;
+            }
             if (bothExist) {
                 stillEqual = node.compareChildren(otherNode);
             }
@@ -66,18 +73,19 @@ public class Node implements INode {
         return stillEqual;
     }
 
-    public String[] getSubStrings(String parentString) {
-        ArrayList<String> subStrings = new ArrayList<>();
+    public String getSubStrings(String parentString) {
+        // TODO: only use string builder
+        StringBuilder sb = new StringBuilder();
         if (getValue() > 0) {
-            subStrings.add(parentString);
+            sb.append(parentString).append("\n");
         }
         for (int i = 0; i < nodes.length; i++) {
             if (nodes[i] != null) {
                 String newParentString = parentString + Character.toString(i + 'a');
-                String[] newSubStrings = nodes[i].getSubStrings(newParentString);
-                Collections.addAll(subStrings, newSubStrings);
+                String newSubStrings = nodes[i].getSubStrings(newParentString);
+                sb.append(newSubStrings);
             }
         }
-        return subStrings.toArray(new String[subStrings.size()]);
+        return sb.toString();
     }
 }

@@ -14,19 +14,16 @@ public class Main {
 	 */
 	public static void main(String[] args) throws IOException {
 		
-//		String dictionaryFileName = args[0];
-//		String inputWord = args[1];
-		String dictionaryFileName = "blahblah.txt";
-		String inputWord = "keenobi";
+		String dictionaryFileName = args[0];
+		String inputWord = args[1];
+//		String dictionaryFileName = "spell//notsobig.txt";
+//		String inputWord = "bcon";
 
-		
 		//
         //Create an instance of your corrector here
         //
 		SpellCorrector corrector = new SpellCorrector();
-		DLMatrix test = new DLMatrix("suggestion", "smmestion");
-		test.printMatrix();
-		System.out.println("Difference: "  + test.getDistance());
+		corrector.useDictionary(dictionaryFileName);
 		String suggestion = corrector.suggestSimilarWord(inputWord);
 		if (suggestion == null) {
 		    suggestion = "No similar word found";
