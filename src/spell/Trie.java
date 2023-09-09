@@ -94,36 +94,6 @@ public class Trie implements ITrie {
         }
     }
 
-    public String findBestWord(String inputWord) {
-        int distanceThreshold = 2;
-        ArrayList<String> bestWords = new ArrayList<String>();
-        int bestDistance = distanceThreshold + 1;
-        String[] uniqueWords = getWordList();
-        for (String word : uniqueWords) {
-            if (Math.abs(word.length() - inputWord.length()) > distanceThreshold) {
-                continue;
-            }
-            DLMatrix newMatrix = new DLMatrix(inputWord, word);
-            int distance = newMatrix.getDistance();
-            if (distance < bestDistance) {
-                bestDistance = distance;
-                bestWords.clear();
-                bestWords.add(word);
-            } else if (distance == bestDistance) {
-                bestWords.add(word);
-            }
-        }
-        if (bestDistance > distanceThreshold) {
-            return null;
-        }
-        if (bestWords.size() > 1) {
-            // alphabetize and return the first
-            Collections.sort(bestWords);
-            return bestWords.get(0);
-        } else {
-            return bestWords.get(0);
-        }
-    }
     public String[] getWordList() {
         String allWords = root.getSubStrings("");
         ArrayList<String> validWords = new ArrayList<>();
