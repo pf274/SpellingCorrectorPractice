@@ -1,16 +1,19 @@
 package spell;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 public class Trie implements ITrie {
 
+    private int nodeCount = 1;
+    private int wordCount;
     private final Node root = new Node();
 
     @Override
     public void add(String word) {
+        boolean wordAlreadyExisted = (find(word) != null);
         Node lastNode = findCreate(word);
         lastNode.incrementValue();
+        if (!wordAlreadyExisted) {
+            wordCount++;
+        }
     }
 
     @Override
@@ -39,6 +42,7 @@ public class Trie implements ITrie {
                 currentNode = currentNode.getChild(c);
             } else {
                 currentNode = currentNode.addChild(c);
+                nodeCount++;
             }
         }
         return currentNode;
@@ -46,24 +50,11 @@ public class Trie implements ITrie {
 
     @Override
     public int getWordCount() {
-        String[] uniqueWords = getWordList();
-        return uniqueWords.length;
+        return wordCount;
     }
 
     @Override
     public int getNodeCount() {
-        ArrayList<Node> remainingNodes = new ArrayList<>();
-        remainingNodes.add(root);
-        int nodeCount = 0;
-        while (!remainingNodes.isEmpty()) {
-            Node currentNode = remainingNodes.remove(0);
-            nodeCount++;
-            for (Node child : currentNode.getChildren()) {
-                if (child != null) {
-                    remainingNodes.add(child);
-                }
-            }
-        }
         return nodeCount;
     }
 
@@ -81,7 +72,7 @@ public class Trie implements ITrie {
                 firstChildIndex = i;
             }
         }
-        return firstChildIndex * getNodeCount() * getWordCount();
+        return firstChildIndex * nodeCount * wordCount;
     }
 
     @Override
@@ -92,16 +83,5 @@ public class Trie implements ITrie {
             System.out.println("argument 1 must be of type Trie");
             return false;
         }
-    }
-
-    public String[] getWordList() {
-        String allWords = root.getSubStrings("");
-        ArrayList<String> validWords = new ArrayList<>();
-        for (String word : allWords.split("\n")) {
-            if (!word.isEmpty()) {
-                validWords.add(word);
-            }
-        }
-        return validWords.toArray(new String[validWords.size()]);
     }
 }

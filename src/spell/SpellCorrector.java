@@ -62,6 +62,8 @@ public class SpellCorrector implements ISpellCorrector {
                 highScore = alterationScore;
                 bestWords.clear();
                 bestWords.add(alteration);
+            } else if (alterationScore == highScore) {
+                bestWords.add(alteration);
             }
         }
         Collections.sort(bestWords);
@@ -75,7 +77,7 @@ public class SpellCorrector implements ISpellCorrector {
         String[] transpositionAlterations = getTranspositions(inputWord);
         String[] substitutionAlterations = getSubstitutions(inputWord);
         String[] additionAlterations = getAdditions(inputWord);
-        ArrayList<String> allAlterations = new ArrayList<String>(deletionAlterations.length + transpositionAlterations.length + substitutionAlterations.length + additionAlterations.length);
+        ArrayList<String> allAlterations = new ArrayList<>(deletionAlterations.length + transpositionAlterations.length + substitutionAlterations.length + additionAlterations.length);
         Collections.addAll(allAlterations, deletionAlterations);
         Collections.addAll(allAlterations, transpositionAlterations);
         Collections.addAll(allAlterations, substitutionAlterations);

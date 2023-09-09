@@ -1,8 +1,6 @@
 package spell;
 
 import javax.management.openmbean.InvalidKeyException;
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class Node implements INode {
     private int count = 0;
@@ -41,15 +39,6 @@ public class Node implements INode {
         }
     }
 
-    public boolean hasChildren() {
-        for (Node node : nodes) {
-            if (node != null) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean compareChildren(Node o) {
         Node[] otherNodes = o.getChildren();
         boolean stillEqual = true;
@@ -74,7 +63,6 @@ public class Node implements INode {
     }
 
     public String getSubStrings(String parentString) {
-        // TODO: only use string builder
         StringBuilder sb = new StringBuilder();
         if (getValue() > 0) {
             sb.append(parentString).append("\n");
